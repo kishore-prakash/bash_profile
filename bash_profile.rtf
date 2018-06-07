@@ -19,14 +19,17 @@
 #   1. ENVIRONMENT CONFIGURATION
 #   -------------------------------
 
+    parse_git_branch() {
+      git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/(\1)/'
+    }
 #   Change Prompt
 #   ---------------------------------------------------------
-    export PS1="\\[\\e[32m\\]\\u\\[\\e[m\\] \\W: "\
+    export PS1="\\[\\e[32m\\]\\u\\[\\e[m\\] \\W \[\033[1;35m\]$(parse_git_branch)\[\033[1;33m\]:\[\033[0m\]"\
 
 #   Set Paths
 #   ------------------------------------------------------------
     export PATH="$PATH:/usr/local/bin/"
-    export PATH="/usr/local/git/bin:/sw/bin/:/usr/local/bin:/usr/local/:/usr/local/sbin:/usr/local/mysql/bin:$PATH"
+    export PATH="/usr/local/mongodb/bin:/usr/local/git/bin:/sw/bin/:/usr/local/bin:/usr/local/:/usr/local/sbin:/usr/local/mysql/bin:$PATH"
 
 #   Set Default Editor (change 'Nano' to the editor of your choice)
 #   ------------------------------------------------------------
@@ -56,6 +59,7 @@ alias ll='ls -FGlAhp'                       # Preferred 'ls' implementation
 alias less='less -FSRXc'                    # Preferred 'less' implementation
 #cd() { builtin cd "$@"; ls; }               # Always list directory contents upon 'cd'
 alias cd..='cd ../'                         # Go back 1 directory level (for fast typers)
+alias cd-='cd -'
 alias ..='cd ../'                           # Go back 1 directory level
 alias ...='cd ../../'                       # Go back 2 directory levels
 alias .3='cd ../../../'                     # Go back 3 directory levels
@@ -294,3 +298,10 @@ httpHeaders () { /usr/bin/curl -I -L $@ ; }             # httpHeaders:      Grab
 #   e.g.: hdiutil create -size 10m 10MB.dmg
 #   the above create files that are almost all zeros - if random bytes are desired
 #   then use: ~/Dev/Perl/randBytes 1048576 > 10MB.dat
+export PATH=$PATH:~/.nexustools
+export PATH=$PATH:~/.nexustools
+
+# Setting PATH for Python 3.6
+# The original version is saved in .bash_profile.pysave
+PATH="/Library/Frameworks/Python.framework/Versions/3.6/bin:${PATH}"
+export PATH
